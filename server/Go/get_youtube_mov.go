@@ -32,7 +32,7 @@ func GetYoutubeMovieInfo() ([]map[string]interface{}, error){
 
 	for _, channelId := range channelIdList {
 		call := service.Search.List([]string{"id", "snippet"}).
-			ChannelId(channelId).
+			ChannelId(channelId).Order("date").
 			MaxResults(3)
 
 		response, err := call.Do()
@@ -44,7 +44,7 @@ func GetYoutubeMovieInfo() ([]map[string]interface{}, error){
 			info := map[string]interface{}{}
 			info["videoId"] = item.Id.VideoId
 			info["title"] = item.Snippet.Title
-			info["thumbnailURL"] = item.Snippet.Thumbnails.Default.Url
+			info["thumbnailURL"] = item.Snippet.Thumbnails.High.Url
 			info["publishedAt"] = item.Snippet.PublishedAt
 			info["userName"] = item.Snippet.ChannelTitle
 			infoList = append(infoList, info)
